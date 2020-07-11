@@ -23,7 +23,7 @@ namespace WEC_2020
                 string api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAGNAnJ5faOpyrvkgc4pHkSqQhSzenrlUc&cx=012776195944492167572:vadbep5zpaq&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
-                var json = "Does not Work!";
+                 string json = "Does not Work!";
                 try
                 {
                      json = new WebClient().DownloadString(api);
