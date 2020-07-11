@@ -6,24 +6,27 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 
 namespace WEC_2020
 {
     public partial class _Default : Page
     {
-
+        //Api required parameters
         string apiID = "016570590808609382194:dvshtfuzlco";
         string key = "AIzaSyD4-OyRy5BX7JOZOTfefm0Wd8ONP83AeMM";
         string api;
 
         List<Result> results;
+        //on page load we update inputs and set the api string.
         protected void Page_Load(object sender, EventArgs e)
         {
             api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
             UpdateInputs();
 
         }
+        //this function is responsible for updating visibility of next and previous buttons.
         protected void UpdateInputs()
         {
             Btn_Current_Page.Visible = true;
@@ -67,6 +70,10 @@ namespace WEC_2020
             }
           
         }
+        /*
+         * This function gets results from google api and stores it as list of objects 
+         * and calls the populateHtml function.
+        */
         protected void Search(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
@@ -101,6 +108,9 @@ namespace WEC_2020
                 UpdateInputs();
             }
         }
+        /*This function takes the list of results and populates the 
+         * web form.
+        */
         public void populateHtml(List<Result> results)
         {
             ResultList.InnerHtml = "";
@@ -123,18 +133,22 @@ namespace WEC_2020
                     ResultList.InnerHtml += body;
                 }
         }
-        
+        //This function is called to move back to previous page of results
         protected void Page_Previous(object sender, EventArgs e)
         {
             Tabify(true);
 
         }
+        //This function is called to move the the next page of results
         protected void Page_Next(object sender, EventArgs e)
         {
             Tabify(false);
         }
 
-
+        /*
+         * This function takes the objects generated from the json file and
+         * compresses them into new objects with only the required fields.
+         */
         protected List<Result> Get_Results(SearchObject.Rootobject searchObj)
         {
             List<Result> value = new List<Result>();
@@ -159,6 +173,12 @@ namespace WEC_2020
 
             return value;
         }
+
+        /*
+         * This function is called when prevous or next is clicked
+         * It grabs the results of the page that you are moving to 
+         * and calls populateHtml to display the results.
+         */
         public void Tabify(bool isprevious)
         {
 
