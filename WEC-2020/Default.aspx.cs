@@ -79,7 +79,6 @@ namespace WEC_2020
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
                 Session["Page"] = 0;
-                //ResultList.InnerHtml = string.Empty;
                 Session["Query"] = SearchQuery.Text.Replace(' ', '+');
 
                 string query = api+ Session["Query"];

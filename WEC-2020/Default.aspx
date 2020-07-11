@@ -27,32 +27,6 @@
      </div>
      <div class="row justify-content-center w-100" runat="server">
         <ul  class="list-group w-100" runat="server" id="ResultList">
-            <!--
-                <li  class="list-group-item">
-                    <div class="row ">
-                        <a href = "link">
-                        <h2 class="font-weight-bold text-info">title</h2>
-                        </a>
-                    </div>
-                    <div class="row">
-                        <a href = "link">link</a>
-                    </div>
-                    <div class="row">
-                        <h6 class="font-weight-bold">body</h6>
-                    </div>
-            </li>
-            <li  class="list-group-item">
-                <div class="row ">
-                    <h2 class="font-weight-bold">title</h2>
-                </div>
-                <div class="row">
-                    <a href = "link">link</a>
-                </div>
-                <div class="row">
-                    <h6 class="font-weight-bold">body</h6>
-                </div>
-            </li>
-             -->
         </ul>
     </div>
 </asp:Content>
