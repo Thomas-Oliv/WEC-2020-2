@@ -21,11 +21,12 @@ namespace WEC_2020
         protected void Page_Load(object sender, EventArgs e)
         {
             api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
+            UpdateInputs();
 
         }
         protected void UpdateInputs()
         {
-            Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"]));
+            Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"])+1);
             if (string.IsNullOrWhiteSpace(SearchQuery.Text) && Convert.ToInt32(Session["Page"]) == 0)
             {
                 Btn_Prev.Enabled = false;
