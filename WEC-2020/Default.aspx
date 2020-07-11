@@ -12,6 +12,27 @@
         </div>
     </div>
     <div class="row justify-content-center" runat="server">
-      
+        <ul class="pagination" runat="server" id="Pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+        </div>
+     <div class="row justify-content-center" runat="server">
+         <table class ="table table-borderless">
+            <tbody id="ResultList">
+                <tr>
+                    <label></label>
+                </tr>
+            </tbody>
+         </table>
+       <ul class="list-group"  id="Result_List">
+           <li class="list-group-item">
+               
+               <p>Title</p>
+               <a href="aaaa"></a>
+               <p>Description</p>
+           </li>
+       </ul>
     </div>
 </asp:Content>

@@ -24,12 +24,12 @@ namespace WEC_2020
         protected global::System.Web.UI.WebControls.TextBox SearchQuery;
 
         /// <summary>
-        /// jsonResponse control.
+        /// Pagination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label jsonResponse;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Pagination;
     }
 }
