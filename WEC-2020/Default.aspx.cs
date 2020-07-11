@@ -25,7 +25,7 @@ namespace WEC_2020
                 string api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAGNAnJ5faOpyrvkgc4pHkSqQhSzenrlUc&cx=012776195944492167572:vadbep5zpaq&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
-                 string json = "Does not Work!";
+                string json = "Does not Work!";
                 try
                 {
                      json = new WebClient().DownloadString(api);
@@ -35,9 +35,22 @@ namespace WEC_2020
 
                 }
                 SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
-                //string link = searchObj.items[1].link;
-                // Perform Search method on SearchQuery.Text
+                var results = fillTable(searchObj);
+                for(int i = 0; i<results.Count; i++)
+                {
+                    searchResult.Text += results[i].link + " " + results[i].snippet + " " + results[i].text + "\n";
+                }
             }
+        }
+        public List <Result> fillTable(SearchObject.Rootobject searchObj)
+        {
+            List<Result> value = new List<Result>();
+            for (int i = 0; i < searchObj.items.Length; i++)
+            {
+                Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet);
+                value.Add(retrieved);
+            }
+            return value;
         }
     }
 }
