@@ -12,6 +12,8 @@ namespace WEC_2020
 {
     public partial class _Default : Page
     {
+        public int page = 0;
+        public string currentPage;
         private List<SearchObject> searchResults = new List<SearchObject>();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -28,6 +30,7 @@ namespace WEC_2020
                 string api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
+                this.currentPage = api;
                 string json = "Does not Work!";
                 try
                 {
@@ -40,23 +43,28 @@ namespace WEC_2020
                 SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
 
                 var results = fillTable(searchObj);
+                populateHtml(results);
                 //string link = searchObj.items[1].link;
                 // Perform Search method on SearchQuery.Text
-                foreach(Result item in results)
-                {
-                    string body = "<li  class=\"list-group-item\">";
-                    body += "<div class=\"row \">";
-                    body += $"<h2 class=\"font-weight-bold\">{item.text}</h2>";
-                    body += "</div>";
-                    body += "<div class=\"row \">";
-                    body += $"<a href = \"{item.link}\">{item.displayLink}</a>";
-                    body += "</div>";
-                    body += "<div class=\"row \">";
-                    body += $"<h6>{item.snippet}</h6>";
-                    body += "</div>";
-                    body += "</li>";
-                    ResultList.InnerHtml += body;
-                }
+            }
+        }
+        public void populateHtml(List<Result> results)
+        {
+            ResultList.InnerHtml = "";
+            foreach (Result item in results)
+            {
+                string body = "<li  class=\"list-group-item\">";
+                body += "<div class=\"row \">";
+                body += $"<h2 class=\"font-weight-bold\">{item.text}</h2>";
+                body += "</div>";
+                body += "<div class=\"row \">";
+                body += $"<a href = \"{item.link}\">{item.displayLink}</a>";
+                body += "</div>";
+                body += "<div class=\"row \">";
+                body += $"<h6>{item.snippet}</h6>";
+                body += "</div>";
+                body += "</li>";
+                ResultList.InnerHtml += body;
             }
         }
         public List <Result> fillTable(SearchObject.Rootobject searchObj)
@@ -76,6 +84,31 @@ namespace WEC_2020
             }
             
             return value;
+        }
+        public void Tabify(bool isprevious)
+        {
+            if(isprevious && this.page != 0)
+            {
+                this.page --;
+            }
+            else if (!isprevious)
+            {
+                this.page ++;
+            }
+            string api = currentPage += "&start=" + (page * 10 + 1).ToString();
+            string json = "Error: try failed.";
+            try
+            {
+                json = new WebClient().DownloadString(api);
+            }
+            catch
+            {
+                
+            }
+            SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+            var results = fillTable(searchObj);
+            populateHtml(results);
+            
         }
     }
 }

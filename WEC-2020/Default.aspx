@@ -13,7 +13,7 @@
      </div>
     <div class="row justify-content-center" runat="server">
         <ul class="pagination" runat="server" id="Pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" onClick>Previous</a></li>
             
           <li class="page-item"><a class="page-link" href="#">Next</a></li>
         </ul>
