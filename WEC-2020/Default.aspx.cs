@@ -52,13 +52,13 @@ namespace WEC_2020
                 Btn_Current_Page.Visible = false;
                 Btn_Current_Page.Enabled = false;
             }
-            if (Convert.ToInt32(Session["Page"]) == 0)
+            if (Convert.ToInt32(Session["Page"]) <= 0)
             {
                 Btn_Prev.Enabled = false;
                 Btn_Prev.Visible = false;
                 
             }
-            if (Convert.ToInt32(Session["Page"]) == Convert.ToInt32(Session["MaxPageCount"]))
+            if (Convert.ToInt32(Session["Page"]) >= Convert.ToInt32(Session["MaxPageCount"]))
             {
 
                 Btn_Next.Enabled = false;
