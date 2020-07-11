@@ -41,7 +41,6 @@ namespace WEC_2020
 
                 }
                 searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
-
                 results = Get_Results();
                 // Perform Search method on SearchQuery.Text
                 foreach (Result item in results)
@@ -65,11 +64,11 @@ namespace WEC_2020
         }
         protected void Page_Previous(object sender, EventArgs e)
         {
-
-
+      
         }
         protected void Page_Next(object sender, EventArgs e)
         {
+            
         }
 
 

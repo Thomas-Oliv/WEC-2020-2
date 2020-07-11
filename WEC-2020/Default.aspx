@@ -12,14 +12,10 @@
         </div>
      </div>
     <div class="row justify-content-center" runat="server">
-          <div class="input-group justify-content-center">
-              <div class="input-group-prepend">
-                   <asp:Button CssClass="btn btn-dark" runat="server" OnClick="Page_Previous" Text="Previous" />
-              </div>
+          <div class="btn-group justify-content-center">
+              <asp:Button CssClass="btn btn-dark" runat="server" OnClick="Page_Previous" Text="Previous" />
               <asp:Button CssClass="btn btn-dark"  runat="server" Text="1" />
-              <div class="input-group-append">
-                 <asp:Button CssClass="btn  btn-dark"  runat="server" OnClick="Page_Next" Text="Next" />
-              </div>
+              <asp:Button CssClass="btn  btn-dark"  runat="server" OnClick="Page_Next" Text="Next" />
         </div>
     </div>
      <div class="row justify-content-center w-100" runat="server">
