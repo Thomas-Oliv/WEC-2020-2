@@ -36,12 +36,31 @@ namespace WEC_2020
                 Btn_Current_Page.Visible = false;
                 Btn_Current_Page.Enabled = false;
             }
+            else if (Convert.ToInt32(Session["MaxPageCount"]) == 0)
+            {
+
+                Btn_Prev.Enabled = false;
+                Btn_Prev.Visible = false;
+                Btn_Next.Enabled = false;
+                Btn_Next.Visible = false;
+                Btn_Current_Page.Visible = false;
+                Btn_Current_Page.Enabled = false;
+            }
             else if (Convert.ToInt32(Session["Page"]) == 0)
             {
                 Btn_Prev.Enabled = false;
                 Btn_Prev.Visible = false;
                 Btn_Next.Enabled = true;
                 Btn_Next.Visible = true;
+                Btn_Current_Page.Visible = true;
+                Btn_Current_Page.Enabled = true;
+            }
+            else if (Convert.ToInt32(Session["Page"]) == Convert.ToInt32(Session["MaxPageCount"]))
+            {
+                Btn_Prev.Enabled = true;
+                Btn_Prev.Visible = true;
+                Btn_Next.Enabled = false;
+                Btn_Next.Visible = false;
                 Btn_Current_Page.Visible = true;
                 Btn_Current_Page.Enabled = true;
             }
@@ -66,17 +85,27 @@ namespace WEC_2020
                 string query = api+ Session["Query"];
 
                 string json = string.Empty;
-                UpdateInputs();
                 try
                 {
                      json = new WebClient().DownloadString(query);
                     SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
                     results = Get_Results(searchObj);
+                    Session["MaxPageCount"] = Math.Ceiling(Convert.ToDecimal(searchObj.searchInformation.totalResults)/10);
+                    if (Convert.ToInt32(searchObj.searchInformation.totalResults) != 0)
+                    {
+                        totalResults.Visible = true;
+                        totalResults.Text = $"Total Results: {searchObj.searchInformation.totalResults}";
+                    }
+                    else
+                    {
+                        totalResults.Text = $"No Results Found";
+                    }
                     populateHtml(results);
-            }
+                }
                 catch
                 {
                 }
+                UpdateInputs();
             }
         }
         public void populateHtml(List<Result> results)
@@ -150,7 +179,7 @@ namespace WEC_2020
                 Session["Page"] = Convert.ToInt32(Session["Page"]) + 1;
             }
 
-            UpdateInputs();
+            
             string query = api + Session["Query"] + "&start=" + (Convert.ToInt32(Session["Page"]) * 10 + 1).ToString();
 
             string json = string.Empty;
@@ -166,8 +195,8 @@ namespace WEC_2020
             {
                 
             }
-           
-            
+            UpdateInputs();
+
         }
     }
 }

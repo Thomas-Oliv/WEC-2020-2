@@ -23,6 +23,9 @@
         </div>
     </div>
      <div class="row justify-content-center w-100" runat="server">
+         <asp:Label  ID="totalResults" runat="server"></asp:Label>
+     </div>
+     <div class="row justify-content-center w-100" runat="server">
         <ul  class="list-group w-100" runat="server" id="ResultList">
             <!--
                 <li  class="list-group-item">

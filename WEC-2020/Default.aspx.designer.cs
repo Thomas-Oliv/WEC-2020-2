@@ -51,6 +51,15 @@ namespace WEC_2020
         protected global::System.Web.UI.WebControls.Button Btn_Next;
 
         /// <summary>
+        /// totalResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label totalResults;
+
+        /// <summary>
         /// ResultList control.
         /// </summary>
         /// <remarks>
