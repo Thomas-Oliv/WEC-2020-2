@@ -20,8 +20,12 @@ namespace WEC_2020
         List<Result> results;
         protected void Page_Load(object sender, EventArgs e)
         {
-            Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"])+1);
             api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
+
+        }
+        protected void UpdateInputs()
+        {
+            Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"]));
             if (string.IsNullOrWhiteSpace(SearchQuery.Text) && Convert.ToInt32(Session["Page"]) == 0)
             {
                 Btn_Prev.Enabled = false;
@@ -50,7 +54,6 @@ namespace WEC_2020
                 Btn_Next.Visible = true;
             }
         }
-        
         protected void Search(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
@@ -59,22 +62,19 @@ namespace WEC_2020
                 ResultList.InnerHtml = string.Empty;
                 Session["Query"] = SearchQuery.Text.Replace(' ', '+');
                 string query = api+ Session["Query"];
-
                 string json = string.Empty;
+                UpdateInputs();
                 try
                 {
                      json = new WebClient().DownloadString(query);
-                }
+                    SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+                    results = Get_Results(searchObj);
+                    populateHtml(results);
+            }
                 catch
                 {
-
                 }
-                SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
-
-                results = Get_Results(searchObj);
-                populateHtml(results);
-                //string link = searchObj.items[1].link;
-                // Perform Search method on SearchQuery.Text
+              
             }
         }
         public void populateHtml(List<Result> results)
@@ -141,26 +141,30 @@ namespace WEC_2020
             if (isprevious && Convert.ToInt32(Session["Page"]) != 0)
             {
                 Session["Page"] = Convert.ToInt32(Session["Page"]) - 1;
+                
             }
             else if (!isprevious)
             {
                 Session["Page"] = Convert.ToInt32(Session["Page"]) + 1;
             }
 
+            UpdateInputs();
             string query = api + Session["Query"] + "&start=" + (Convert.ToInt32(Session["Page"]) * 10 + 1).ToString();
 
             string json = string.Empty;
             try
             {
                 json = new WebClient().DownloadString(query);
+                SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+                var results = Get_Results(searchObj);
+                
+                populateHtml(results);
             }
             catch
             {
                 
             }
-            SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
-            var results = Get_Results(searchObj);
-            populateHtml(results);
+           
             
         }
     }

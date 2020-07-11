@@ -37,7 +37,13 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
+        <nav class="navbar navbar-inverse justify-content-center">
+            <div class="container-fluid justify-content-center">
+                <div class="navbar-header justify-content-center">
+                    <h2 class="navbar-brand font-weight-bold">Google 2 : Electric Boogaloo</h2>
+                </div>
+            </div>
+        </nav>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
