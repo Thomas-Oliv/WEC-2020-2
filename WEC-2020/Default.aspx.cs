@@ -42,8 +42,18 @@ namespace WEC_2020
                 // Perform Search method on SearchQuery.Text
                 foreach(SearchObject.Item item in searchObj.items)
                 {
-                    string body = "<tr>";
-                    body += $"<label>{item.title}</label>";
+                    string body = "<li  class=\"list-group-item\">";
+                    body += "<div class=\"row \">";
+                    body += $"<h2 class=\"font-weight-bold\">{item.title}</h2>";
+                    body += "</div>";
+                    body += "<div class=\"row \">";
+                    body += $"<a href = \"{item.link}\">{item.displayLink}</a>";
+                    body += "</div>";
+                    body += "<div class=\"row \">";
+                    body += $"<h6>{item.snippet}</h6>";
+                    body += "</div>";
+                    body += "</li>";
+                    ResultList.InnerHtml += body;
                 }
             }
         }
