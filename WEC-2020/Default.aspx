@@ -8,9 +8,6 @@
                 <div class="input-group-append">
                     <asp:Button runat="server" class="btn btn-block btn-success" Text="Search" OnClick="Search" />
                 </div>
-                <div>
-                    <asp:Label ID ="searchResult" runat="server"></asp:Label>
-                </div>
             </div>
         </div>
     </div>
