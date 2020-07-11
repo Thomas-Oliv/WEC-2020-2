@@ -15,9 +15,6 @@ namespace WEC_2020
 
         public int page = 0;
         public string currentPage;
-        private List<SearchObject> searchResults = new List<SearchObject>();
-
-        SearchObject.Rootobject searchObj;
         List<Result> results;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,9 +44,9 @@ namespace WEC_2020
                 {
 
                 }
-                searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+                SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
 
-                var results = fillTable(searchObj);
+                results = Get_Results(searchObj);
                 populateHtml(results);
                 //string link = searchObj.items[1].link;
                 // Perform Search method on SearchQuery.Text
@@ -76,8 +73,8 @@ namespace WEC_2020
                     body += "</li>";
                     ResultList.InnerHtml += body;
                 }
-            }
         }
+        
         protected void Page_Previous(object sender, EventArgs e)
         {
 
@@ -88,7 +85,7 @@ namespace WEC_2020
         }
 
 
-        protected List<Result> Get_Results()
+        protected List<Result> Get_Results(SearchObject.Rootobject searchObj)
         {
             List<Result> value = new List<Result>();
             try {
@@ -127,7 +124,7 @@ namespace WEC_2020
                 
             }
             SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
-            var results = fillTable(searchObj);
+            var results = Get_Results(searchObj);
             populateHtml(results);
             
         }
