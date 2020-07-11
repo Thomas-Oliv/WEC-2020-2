@@ -12,6 +12,11 @@ namespace WEC_2020
 {
     public partial class _Default : Page
     {
+
+        public int page = 0;
+        public string currentPage;
+        private List<SearchObject> searchResults = new List<SearchObject>();
+
         SearchObject.Rootobject searchObj;
         List<Result> results;
         protected void Page_Load(object sender, EventArgs e)
@@ -31,6 +36,8 @@ namespace WEC_2020
                 string api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
+
+                this.currentPage = api;
                 string json = string.Empty;
                 try
                 {
@@ -42,7 +49,15 @@ namespace WEC_2020
                 }
                 searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
 
-                results = Get_Results();
+                var results = fillTable(searchObj);
+                populateHtml(results);
+                //string link = searchObj.items[1].link;
+                // Perform Search method on SearchQuery.Text
+            }
+        }
+        public void populateHtml(List<Result> results)
+        {
+            ResultList.InnerHtml = "";
                 // Perform Search method on SearchQuery.Text
                 foreach (Result item in results)
                 {
@@ -90,6 +105,31 @@ namespace WEC_2020
             }
 
             return value;
+        }
+        public void Tabify(bool isprevious)
+        {
+            if(isprevious && this.page != 0)
+            {
+                this.page --;
+            }
+            else if (!isprevious)
+            {
+                this.page ++;
+            }
+            string api = currentPage += "&start=" + (page * 10 + 1).ToString();
+            string json = "Error: try failed.";
+            try
+            {
+                json = new WebClient().DownloadString(api);
+            }
+            catch
+            {
+                
+            }
+            SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+            var results = fillTable(searchObj);
+            populateHtml(results);
+            
         }
     }
 }
