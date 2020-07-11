@@ -12,8 +12,8 @@ namespace WEC_2020
 {
     public partial class _Default : Page
     {
-        private List<SearchObject> searchResults = new List<SearchObject>();
-
+        SearchObject.Rootobject searchObj;
+        List<Result> results;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -40,18 +40,16 @@ namespace WEC_2020
                 {
 
                 }
-                SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+                searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
 
-
-   
-                //string link = searchObj.items[1].link;
+                results = Get_Results();
                 // Perform Search method on SearchQuery.Text
-                foreach(Result item in results)
+                foreach (Result item in results)
                 {
                     string body = "<li  class=\"list-group-item\">";
                     body += "<div class=\"row \">";
                     body += "<a href=\"link\">";
-                    body += $"<h2 class=\"font-weight-bold text-info \">{item.title}</h2>";
+                    body += $"<h2 class=\"font-weight-bold text-info \">{item.text}</h2>";
                     body += "</a>";
                     body += "</div>";
                     body += "<div class=\"row \">";
@@ -72,8 +70,11 @@ namespace WEC_2020
         }
         protected void Page_Next(object sender, EventArgs e)
         {
-        
+        }
 
+
+        protected List<Result> Get_Results()
+        {
             List<Result> value = new List<Result>();
             try {
                 for (int i = 0; i < searchObj.items.Length; i++)
@@ -87,9 +88,8 @@ namespace WEC_2020
             {
                 return new List<Result>();
             }
-            
-            return value;
 
+            return value;
         }
     }
 }
