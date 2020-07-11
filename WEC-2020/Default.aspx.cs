@@ -73,8 +73,6 @@ namespace WEC_2020
 
                 results = Get_Results(searchObj);
                 populateHtml(results);
-                //string link = searchObj.items[1].link;
-                // Perform Search method on SearchQuery.Text
             }
         }
         public void populateHtml(List<Result> results)
