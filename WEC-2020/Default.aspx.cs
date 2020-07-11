@@ -14,8 +14,8 @@ namespace WEC_2020
     public partial class _Default : Page
     {
         //Api required parameters
-        string apiID = "016570590808609382194:dvshtfuzlco";
-        string key = "AIzaSyD4-OyRy5BX7JOZOTfefm0Wd8ONP83AeMM";
+        string apiID = "012776195944492167572:hvfearqxilu";
+        string key = "AIzaSyCEwllTx8dDBvu6EFUhnneQBSmLFOxdxl4";
         string api;
 
         List<Result> results;
