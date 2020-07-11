@@ -24,6 +24,33 @@ namespace WEC_2020
         protected global::System.Web.UI.WebControls.TextBox SearchQuery;
 
         /// <summary>
+        /// Btn_Prev control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Prev;
+
+        /// <summary>
+        /// Btn_Current_Page control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Current_Page;
+
+        /// <summary>
+        /// Btn_Next control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Next;
+
+        /// <summary>
         /// ResultList control.
         /// </summary>
         /// <remarks>

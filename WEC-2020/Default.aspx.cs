@@ -13,32 +13,57 @@ namespace WEC_2020
     public partial class _Default : Page
     {
 
-        public int page = 0;
-        public string currentPage;
+        string apiID = "006472699420085524376:lsvl8mcfohs";
+        string key = "AIzaSyCYKYo5Knbq9FoMTELupi6iVXSaXcVLZ0g";
+        string api;
+
         List<Result> results;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"])+1);
+            api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
+            if (string.IsNullOrWhiteSpace(SearchQuery.Text) && Convert.ToInt32(Session["Page"]) == 0)
+            {
+                Btn_Prev.Enabled = false;
+                Btn_Prev.Visible = false;
+                Btn_Next.Enabled = false;
+                Btn_Next.Visible = false;
+                Btn_Current_Page.Visible = false;
+                Btn_Current_Page.Enabled = false;
+            }
+            else if (Convert.ToInt32(Session["Page"]) == 0)
+            {
+                Btn_Prev.Enabled = false;
+                Btn_Prev.Visible = false;
+                Btn_Next.Enabled = true;
+                Btn_Next.Visible = true;
+                Btn_Current_Page.Visible = true;
+                Btn_Current_Page.Enabled = true;
+            }
+            else
+            {
+                Btn_Current_Page.Visible = true;
+                Btn_Current_Page.Enabled = true;
+                Btn_Prev.Enabled = true;
+                Btn_Prev.Visible = true;
+                Btn_Next.Enabled = true;
+                Btn_Next.Visible = true;
+            }
         }
         
         protected void Search(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
-
+                Session["Page"] = 0;
                 ResultList.InnerHtml = string.Empty;
+                Session["Query"] = SearchQuery.Text.Replace(' ', '+');
+                string query = api+ Session["Query"];
 
-                string apiID = "006472699420085524376:lsvl8mcfohs";
-                string key = "AIzaSyCYKYo5Knbq9FoMTELupi6iVXSaXcVLZ0g";
-                string api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
-                string q = SearchQuery.Text.Replace(' ', '+');
-                api += q;
-
-                this.currentPage = api;
                 string json = string.Empty;
                 try
                 {
-                     json = new WebClient().DownloadString(api);
+                     json = new WebClient().DownloadString(query);
                 }
                 catch
                 {
@@ -60,7 +85,7 @@ namespace WEC_2020
                 {
                     string body = "<li  class=\"list-group-item\">";
                     body += "<div class=\"row \">";
-                    body += "<a href=\"link\">";
+                    body += $"<a href=\"{item.link}\">";
                     body += $"<h2 class=\"font-weight-bold text-info \">{item.text}</h2>";
                     body += "</a>";
                     body += "</div>";
@@ -77,11 +102,12 @@ namespace WEC_2020
         
         protected void Page_Previous(object sender, EventArgs e)
         {
-
+            Tabify(true);
 
         }
         protected void Page_Next(object sender, EventArgs e)
         {
+            Tabify(false);
         }
 
 
@@ -89,14 +115,20 @@ namespace WEC_2020
         {
             List<Result> value = new List<Result>();
             try {
-                for (int i = 0; i < searchObj.items.Length; i++)
+                if (searchObj != null)
                 {
-                    Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet
-                        , searchObj.items[i].displayLink);
-                    value.Add(retrieved);
+                    if (searchObj.items != null)
+                    {
+                        for (int i = 0; i < searchObj.items.Length; i++)
+                        {
+                            Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet
+                                , searchObj.items[i].displayLink);
+                            value.Add(retrieved);
+                        }
+                    }
                 }
             }
-            catch
+            catch( NullReferenceException ex)
             {
                 return new List<Result>();
             }
@@ -105,19 +137,22 @@ namespace WEC_2020
         }
         public void Tabify(bool isprevious)
         {
-            if(isprevious && this.page != 0)
+
+            if (isprevious && Convert.ToInt32(Session["Page"]) != 0)
             {
-                this.page --;
+                Session["Page"] = Convert.ToInt32(Session["Page"]) - 1;
             }
             else if (!isprevious)
             {
-                this.page ++;
+                Session["Page"] = Convert.ToInt32(Session["Page"]) + 1;
             }
-            string api = currentPage += "&start=" + (page * 10 + 1).ToString();
-            string json = "Error: try failed.";
+
+            string query = api + Session["Query"] + "&start=" + (Convert.ToInt32(Session["Page"]) * 10 + 1).ToString();
+
+            string json = string.Empty;
             try
             {
-                json = new WebClient().DownloadString(api);
+                json = new WebClient().DownloadString(query);
             }
             catch
             {
