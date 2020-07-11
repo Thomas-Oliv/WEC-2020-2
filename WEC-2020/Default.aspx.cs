@@ -23,7 +23,9 @@ namespace WEC_2020
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
-                string api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAGNAnJ5faOpyrvkgc4pHkSqQhSzenrlUc&cx=012776195944492167572:vadbep5zpaq&q=";
+                string apiID = "006472699420085524376:lsvl8mcfohs";
+                string key = "AIzaSyCYKYo5Knbq9FoMTELupi6iVXSaXcVLZ0g";
+                string api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
                 string json = "Does not Work!";
@@ -40,11 +42,11 @@ namespace WEC_2020
                 var results = fillTable(searchObj);
                 //string link = searchObj.items[1].link;
                 // Perform Search method on SearchQuery.Text
-                foreach(SearchObject.Item item in searchObj.items)
+                foreach(Result item in results)
                 {
                     string body = "<li  class=\"list-group-item\">";
                     body += "<div class=\"row \">";
-                    body += $"<h2 class=\"font-weight-bold\">{item.title}</h2>";
+                    body += $"<h2 class=\"font-weight-bold\">{item.text}</h2>";
                     body += "</div>";
                     body += "<div class=\"row \">";
                     body += $"<a href = \"{item.link}\">{item.displayLink}</a>";
@@ -60,11 +62,19 @@ namespace WEC_2020
         public List <Result> fillTable(SearchObject.Rootobject searchObj)
         {
             List<Result> value = new List<Result>();
-            for (int i = 0; i < searchObj.items.Length; i++)
-            {
-                Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet);
-                value.Add(retrieved);
+            try {
+                for (int i = 0; i < searchObj.items.Length; i++)
+                {
+                    Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet
+                        , searchObj.items[i].displayLink);
+                    value.Add(retrieved);
+                }
             }
+            catch
+            {
+                return new List<Result>();
+            }
+            
             return value;
         }
     }
