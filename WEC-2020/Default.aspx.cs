@@ -19,7 +19,9 @@ namespace WEC_2020
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
-
+                string api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAGNAnJ5faOpyrvkgc4pHkSqQhSzenrlUc&cx=012776195944492167572:vadbep5zpaq&q=";
+                string q = SearchQuery.Text.Replace(' ', '+');
+                api += q;
                 // Perform Search method on SearchQuery.Text
             }
         }
