@@ -13,8 +13,8 @@ namespace WEC_2020
     public partial class _Default : Page
     {
 
-        string apiID = "006472699420085524376:lsvl8mcfohs";
-        string key = "AIzaSyCYKYo5Knbq9FoMTELupi6iVXSaXcVLZ0g";
+        string apiID = "016570590808609382194:dvshtfuzlco";
+        string key = "AIzaSyD4-OyRy5BX7JOZOTfefm0Wd8ONP83AeMM";
         string api;
 
         List<Result> results;
@@ -56,10 +56,10 @@ namespace WEC_2020
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
                 Session["Page"] = 0;
-                ResultList.InnerHtml = string.Empty;
+                //ResultList.InnerHtml = string.Empty;
                 Session["Query"] = SearchQuery.Text.Replace(' ', '+');
-                string query = api+ Session["Query"];
-
+                string query = api + Session["Query"];
+                
                 string json = string.Empty;
                 try
                 {
