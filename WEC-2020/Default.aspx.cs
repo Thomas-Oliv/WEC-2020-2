@@ -36,11 +36,6 @@ namespace WEC_2020
                 }
                 SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
                 var results = fillTable(searchObj);
-                searchResult.Text = "";
-                for (int i = 0; i<results.Count; i++)
-                {
-                    searchResult.Text += i.ToString() + ":" + results[i].link + " " + results[i].snippet + " " + results[i].text + "\n";
-                }
             }
         }
         public List <Result> fillTable(SearchObject.Rootobject searchObj)
