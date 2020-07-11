@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace WEC_2020
 {
@@ -32,6 +34,8 @@ namespace WEC_2020
                 {
 
                 }
+                SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
+                //string link = searchObj.items[1].link;
                 // Perform Search method on SearchQuery.Text
             }
         }
