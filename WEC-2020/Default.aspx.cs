@@ -13,5 +13,10 @@ namespace WEC_2020
         {
 
         }
+
+        protected void Search(object sender, EventArgs e)
+        {
+            SearchQuery.Text="pog";
+        }
     }
 }
