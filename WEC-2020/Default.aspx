@@ -8,9 +8,10 @@
                 <div class="input-group-append">
                     <asp:Button runat="server" class="btn btn-block btn-success" Text="Search" OnClick="Search" />
                 </div>
-                
             </div>
         </div>
     </div>
-
+    <div class="row justify-content-center" runat="server">
+      
+    </div>
 </asp:Content>
