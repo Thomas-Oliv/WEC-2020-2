@@ -23,8 +23,12 @@ namespace WEC_2020
         {
             if (!string.IsNullOrWhiteSpace(SearchQuery.Text))
             {
+
                 ResultList.InnerHtml = string.Empty;
-                string api = "https://www.googleapis.com/customsearch/v1?key=AIzaSyAGNAnJ5faOpyrvkgc4pHkSqQhSzenrlUc&cx=012776195944492167572:vadbep5zpaq&q=";
+
+                string apiID = "006472699420085524376:lsvl8mcfohs";
+                string key = "AIzaSyCYKYo5Knbq9FoMTELupi6iVXSaXcVLZ0g";
+                string api = "https://www.googleapis.com/customsearch/v1?key=" + key + "&cx=" + apiID + "&q=";
                 string q = SearchQuery.Text.Replace(' ', '+');
                 api += q;
                 string json = string.Empty;
@@ -42,7 +46,7 @@ namespace WEC_2020
    
                 //string link = searchObj.items[1].link;
                 // Perform Search method on SearchQuery.Text
-                foreach(SearchObject.Item item in searchObj.items)
+                foreach(Result item in results)
                 {
                     string body = "<li  class=\"list-group-item\">";
                     body += "<div class=\"row \">";
@@ -64,11 +68,28 @@ namespace WEC_2020
         protected void Page_Previous(object sender, EventArgs e)
         {
 
+
         }
         protected void Page_Next(object sender, EventArgs e)
         {
+        
+
+            List<Result> value = new List<Result>();
+            try {
+                for (int i = 0; i < searchObj.items.Length; i++)
+                {
+                    Result retrieved = new Result(searchObj.items[i].title, searchObj.items[i].link, searchObj.items[i].htmlSnippet
+                        , searchObj.items[i].displayLink);
+                    value.Add(retrieved);
+                }
+            }
+            catch
+            {
+                return new List<Result>();
+            }
+            
+            return value;
 
         }
-        
     }
 }
