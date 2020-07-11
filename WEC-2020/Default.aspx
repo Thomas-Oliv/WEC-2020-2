@@ -6,7 +6,7 @@
             <div class="input-group">
                     <asp:TextBox ID="SearchQuery" runat="server" CssClass="form-control"></asp:TextBox>
                 <div class="input-group-append">
-                    <button runat="server" class="btn btn-block btn-success"  onsubmit="Search">Search</button>
+                    <asp:Button runat="server" class="btn btn-block btn-success" Text="Search" OnClick="Search" />
                 </div>
                 
             </div>
