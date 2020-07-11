@@ -26,6 +26,12 @@ namespace WEC_2020
         }
         protected void UpdateInputs()
         {
+            Btn_Current_Page.Visible = true;
+            Btn_Current_Page.Enabled = true;
+            Btn_Prev.Enabled = true;
+            Btn_Prev.Visible = true;
+            Btn_Next.Enabled = true;
+            Btn_Next.Visible = true;
             Btn_Current_Page.Text = Convert.ToString(Convert.ToInt32(Session["Page"])+1);
             if (string.IsNullOrWhiteSpace(SearchQuery.Text) && Convert.ToInt32(Session["Page"]) == 0)
             {
@@ -46,33 +52,20 @@ namespace WEC_2020
                 Btn_Current_Page.Visible = false;
                 Btn_Current_Page.Enabled = false;
             }
-            else if (Convert.ToInt32(Session["Page"]) == 0)
+            if (Convert.ToInt32(Session["Page"]) == 0)
             {
                 Btn_Prev.Enabled = false;
                 Btn_Prev.Visible = false;
-                Btn_Next.Enabled = true;
-                Btn_Next.Visible = true;
-                Btn_Current_Page.Visible = true;
-                Btn_Current_Page.Enabled = true;
+                
             }
-            else if (Convert.ToInt32(Session["Page"]) == Convert.ToInt32(Session["MaxPageCount"]))
+            if (Convert.ToInt32(Session["Page"]) == Convert.ToInt32(Session["MaxPageCount"]))
             {
-                Btn_Prev.Enabled = true;
-                Btn_Prev.Visible = true;
+
                 Btn_Next.Enabled = false;
                 Btn_Next.Visible = false;
-                Btn_Current_Page.Visible = true;
-                Btn_Current_Page.Enabled = true;
+
             }
-            else
-            {
-                Btn_Current_Page.Visible = true;
-                Btn_Current_Page.Enabled = true;
-                Btn_Prev.Enabled = true;
-                Btn_Prev.Visible = true;
-                Btn_Next.Enabled = true;
-                Btn_Next.Visible = true;
-            }
+          
         }
         protected void Search(object sender, EventArgs e)
         {
