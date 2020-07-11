@@ -117,6 +117,7 @@ namespace WEC_2020
                 // Perform Search method on SearchQuery.Text
                 foreach (Result item in results)
                 {
+                //Generate a list of results based on query and convert it to html
                     string body = "<li  class=\"list-group-item\">";
                     body += "<div class=\"row \">";
                     body += $"<a href=\"{item.link}\">";
@@ -151,6 +152,7 @@ namespace WEC_2020
          */
         protected List<Result> Get_Results(SearchObject.Rootobject searchObj)
         {
+            //Extract all of the necessary result specific data from the search result object
             List<Result> value = new List<Result>();
             try {
                 if (searchObj != null)
@@ -181,12 +183,13 @@ namespace WEC_2020
          */
         public void Tabify(bool isprevious)
         {
-
+            //when previous is clicked and you are not on the first page then go to previous tab
             if (isprevious && Convert.ToInt32(Session["Page"]) != 0)
             {
                 Session["Page"] = Convert.ToInt32(Session["Page"]) - 1;
                 
             }
+            //when next is clicked then go to the next tab of results
             else if (!isprevious)
             {
                 Session["Page"] = Convert.ToInt32(Session["Page"]) + 1;
@@ -198,6 +201,7 @@ namespace WEC_2020
             string json = string.Empty;
             try
             {
+                //get the results of the new tab
                 json = new WebClient().DownloadString(query);
                 SearchObject.Rootobject searchObj = JsonConvert.DeserializeObject<SearchObject.Rootobject>(json);
                 var results = Get_Results(searchObj);
